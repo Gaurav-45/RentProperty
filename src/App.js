@@ -22,8 +22,8 @@ function App() {
   const handleFilter = (query) => {
     const filteredData = data.filter((item) => {
       if (item.city.toLowerCase().includes(query.city.toLowerCase()) &&  //Check if the current item has the same city
-          (query.type==""?true:item.propertyType==query.type) &&  //If no property is selected return true else find the matching property
-          (query.price==""?true:(Number(query.price.split("-")[0].substring(3))<=item.price && Number(query.price.split("-")[1].substring(3))>item.price)) && //Compare price range
+          (query.type===""?true:item.propertyType===query.type) &&  //If no property is selected return true else find the matching property
+          (query.price===""?true:(Number(query.price.split("-")[0].substring(3))<=item.price && Number(query.price.split("-")[1].substring(3))>item.price)) && //Compare price range
           (dayjs(item.fromDate).isSameOrAfter(query.date)) //Check if the property is available before the arrival date
           ) {
         return item;
@@ -43,7 +43,7 @@ function App() {
       <Navbar/>
       <Filter handleFilter={handleFilter} handleClearFilter={handleClearFilter}/>
       {/* If data is present after the query then render else error message */}
-      {allData.length!=0?
+      {allData.length!==0?
         <div className="home">
           {allData.map((item)=>(
             <Card item={item} key={item.id}/>
